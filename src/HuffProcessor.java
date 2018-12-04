@@ -9,6 +9,7 @@
  * 
  * @author Owen Astrachan
  * @author Andrew Kellogg Peeler
+ * @author Ben Harris
  */
 
 public class HuffProcessor {
