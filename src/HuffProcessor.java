@@ -119,8 +119,10 @@ public class HuffProcessor {
 	
 	protected void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
 		for (int dex = 0; dex<codings.length; dex++) {
-			String code = codings[dex];
-			out.writeBits(code.length(), Integer.parseInt(code,2));
+			if (codings[dex].length()>0) {
+				String code = codings[dex];
+				out.writeBits(code.length(), Integer.parseInt(code,2));
+			}
 		}
 		
 	}
