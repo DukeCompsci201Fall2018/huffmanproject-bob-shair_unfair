@@ -140,7 +140,7 @@ public class HuffProcessor {
 				System.out.printf("%d wrote %d for %d bits\n", dex,Integer.parseInt(code,2), code.length());
 			}
 		}
-		String code = codings[256];
+		String code = codings[ALPH_SIZE];
 		out.writeBits(code.length(), Integer.parseInt(code,2));
 		if (myDebugLevel>=DEBUG_HIGH) {
 			System.out.printf("wrote %d for %d bits PSEUDO_EOF\n", Integer.parseInt(code,2),code.length());
