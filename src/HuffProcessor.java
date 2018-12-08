@@ -176,6 +176,9 @@ public class HuffProcessor {
 		}
 		else {
 			int value = in.readBits(BITS_PER_WORD + 1);
+			if (myDebugLevel >= DEBUG_HIGH) {
+				System.out.printf("added leaf with value %d\n", value);
+			}
 			return new HuffNode(value, 0, null, null);
 		}
 		
@@ -196,7 +199,11 @@ public class HuffProcessor {
 					if (current.myValue == PSEUDO_EOF) break;
 					else {
 						output.writeBits(BITS_PER_WORD,current.myValue); 
+						if (myDebugLevel>=DEBUG_HIGH) {
+							System.out.printf("read leaf with value %d\n", current.myValue,BITS_PER_WORD);
+						}
 						current = root;
+						
 					}
 				}
 			}
