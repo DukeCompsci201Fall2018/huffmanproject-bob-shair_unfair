@@ -52,6 +52,9 @@ public class HuffProcessor {
 		String[] codings = makeCodingsFromTree(root);
 		
 		out.writeBits(BITS_PER_INT, HUFF_TREE);
+		if (myDebugLevel>=DEBUG_HIGH) {
+			System.out.printf("wrote magic number %d\n", HUFF_TREE);
+		}
 		writeHeader(root,out);
 		
 		in.reset();
@@ -140,7 +143,7 @@ public class HuffProcessor {
 		String code = codings[256];
 		out.writeBits(code.length(), Integer.parseInt(code,2));
 		if (myDebugLevel>=DEBUG_HIGH) {
-			System.out.printf("wrote %d for %d bits PSEUDO_EOF", Integer.parseInt(code,2),code.length());
+			System.out.printf("wrote %d for %d bits PSEUDO_EOF\n", Integer.parseInt(code,2),code.length());
 		}
 		
 	}
