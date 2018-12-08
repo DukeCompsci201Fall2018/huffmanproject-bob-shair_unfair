@@ -36,7 +36,6 @@ public class HuffProcessor {
 		myDebugLevel = debug;
 	}
 	
-	HuffProcessor hp = new HuffProcessor(HuffProcessor.DEBUG_HIGH);
 
 	/**
 	 * Compresses a file. Process must be reversible and loss-less.
