@@ -35,6 +35,8 @@ public class HuffProcessor {
 	public HuffProcessor(int debug) {
 		myDebugLevel = debug;
 	}
+	
+	HuffProcessor hp = new HuffProcessor(HuffProcessor.DEBUG_HIGH);
 
 	/**
 	 * Compresses a file. Process must be reversible and loss-less.
@@ -77,6 +79,9 @@ public class HuffProcessor {
 		for (int dex = 0; dex<freq.length; dex++) {
 			if (freq[dex] >0) pq.add(new HuffNode(dex, freq[dex],null,null));
 		}
+		if (myDebugLevel >= DEBUG_HIGH) {
+			System.out.printf("pq created with %d nodes\n", pq.size());
+		}
 		
 		while (pq.size()>1) {
 			HuffNode left = pq.remove();
@@ -97,6 +102,9 @@ public class HuffProcessor {
 	private void codingHelper(HuffNode root, String path, String[] encodings) {
 		if (root.myLeft==null && root.myRight== null) {
 			encodings[root.myValue] = path;
+			if (myDebugLevel>= DEBUG_HIGH) {
+				System.out.printf("encoding for %d is %s\n", root.myValue,path);
+			}
 			return;
 		}
 		String pathL = path + "0";
@@ -109,6 +117,9 @@ public class HuffProcessor {
 		if (root.myLeft == null && root.myRight == null) {
 			output.writeBits(1, 1);
 			output.writeBits(BITS_PER_WORD+1, root.myValue);
+			if (myDebugLevel>=DEBUG_HIGH) {
+				System.out.printf("wrote leaf for tree %d\n", root.myValue);
+			}
 		}
 		else {
 			output.writeBits(1, 0);
@@ -123,9 +134,15 @@ public class HuffProcessor {
 			if (dex == -1) break;
 			String code = codings[dex];
 			out.writeBits(code.length(), Integer.parseInt(code,2));
+			if (myDebugLevel>=DEBUG_HIGH) {
+				System.out.printf("%d wrote %d for %d bits\n", dex,Integer.parseInt(code,2), code.length());
+			}
 		}
 		String code = codings[256];
 		out.writeBits(code.length(), Integer.parseInt(code,2));
+		if (myDebugLevel>=DEBUG_HIGH) {
+			System.out.printf("wrote %d for %d bits PSEUDO_EOF", Integer.parseInt(code,2),code.length());
+		}
 		
 	}
 	/**
